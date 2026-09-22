@@ -12,7 +12,7 @@ export function SiteHeader() {
           aria-label="3i Forum with Stefan de Alwis, home"
         >
           <LogoMark className="h-12 w-auto shrink-0 text-brand sm:h-14" />
-          <span className="flex flex-col items-center font-wordmark leading-tight">
+          <span className="flex flex-col items-start font-wordmark leading-tight">
             <span className="text-[1.15rem] font-semibold tracking-tight sm:text-[1.45rem]">
               Forum
             </span>

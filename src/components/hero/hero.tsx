@@ -271,18 +271,19 @@ export function Hero() {
           </span>
           <span className="display text-lg tracking-wider text-brand sm:text-xl">Applications now open</span>
         </p>
-        <h1 className="display text-[22vw] leading-[0.85] whitespace-nowrap sm:text-[15vw] lg:text-[13rem]">
-          <span className="land-mask block">
-            <span aria-hidden="true" className="land land-2 flex items-end gap-[0.12em]">
-              <LogoMark className="mb-[0.1em] h-[0.72em] w-auto shrink-0 text-brand" />
-              <span>Forum</span>
+        {/* Lockup, mirroring the header: logo mark, then Forum over "with Stefan de Alwis". */}
+        <h1>
+          <span className="sr-only">3i Forum with Stefan de Alwis</span>
+          <span aria-hidden="true" className="grid grid-cols-[auto_1fr] items-center gap-x-[4vw] sm:gap-x-8">
+            <LogoMark className="land land-2 row-span-2 aspect-[543/646] h-full w-auto text-brand" />
+            <span className="land land-2 display block text-[19vw] leading-[0.8] whitespace-nowrap sm:text-[12vw] lg:text-[11rem]">
+              Forum
+            </span>
+            <span className="land land-3 mt-2 block text-sm tracking-[0.2em] whitespace-nowrap text-paper uppercase sm:mt-3 sm:text-2xl sm:tracking-[0.3em] lg:text-3xl">
+              with Stefan de Alwis
             </span>
           </span>
-          <span className="sr-only">3i Forum with Stefan de Alwis</span>
         </h1>
-        <p className="land land-3 mt-4 text-lg tracking-[0.3em] text-paper uppercase sm:text-2xl lg:text-3xl">
-          with Stefan de Alwis
-        </p>
         <div className="mt-8 flex flex-col gap-6 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">
           <div className="land land-4 max-w-xl">
             <p className="display text-3xl text-brand sm:text-4xl">Connect. Learn. Build. Grow.</p>
