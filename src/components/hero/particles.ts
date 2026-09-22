@@ -343,7 +343,7 @@ export function createParticleEngine(canvas: HTMLCanvasElement, { count, maxPixe
 // inside it, mapped to world space (view height = 2 units at z = 0).
 export function samplePathPoints(
   path: string,
-  box: { width: number; height: number },
+  box: { x?: number; y?: number; width: number; height: number },
   count: number,
   { worldHeight, maxWorldWidth, offsetY = 0 }: { worldHeight: number; maxWorldWidth: number; offsetY?: number },
 ): Float32Array {
@@ -355,6 +355,7 @@ export function samplePathPoints(
   c.height = h;
   const ctx = c.getContext("2d", { willReadFrequently: true })!;
   ctx.scale(res, res);
+  ctx.translate(-(box.x ?? 0), -(box.y ?? 0));
   ctx.fillStyle = "#fff";
   ctx.fill(new Path2D(path));
 

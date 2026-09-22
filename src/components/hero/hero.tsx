@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { LOGO_PATH, LOGO_VIEWBOX } from "@/components/logo-mark";
+import { LOGO_PATH, LOGO_VIEWBOX, LogoMark } from "@/components/logo-mark";
 import type { ParticleEngine } from "./particles";
 
 type Phase = "pending" | "playing" | "landing" | "done";
@@ -247,9 +247,7 @@ export function Hero() {
           data-intro-caption
           className="absolute inset-x-0 top-[70%] px-4 text-center opacity-0 md:top-[76%]"
         >
-          <p className="display text-4xl tracking-[0.3em] text-white md:text-6xl">
-            <span className="text-brand normal-case">3i</span> Forum
-          </p>
+          <p className="display text-4xl tracking-[0.3em] text-white md:text-6xl">Forum</p>
           <p className="mt-2 text-sm tracking-[0.35em] text-white/70 uppercase md:text-base">with Stefan de Alwis</p>
         </div>
       </div>
@@ -273,16 +271,16 @@ export function Hero() {
           </span>
           <span className="display text-lg tracking-wider text-brand sm:text-xl">Applications now open</span>
         </p>
-        <h1 className="display text-[23vw] leading-[0.8] sm:text-[14vw] lg:text-[12.5rem]">
+        <h1 className="display text-[22vw] leading-[0.85] whitespace-nowrap sm:text-[15vw] lg:text-[13rem]">
           <span className="land-mask block">
-            <span className="land land-2 block text-brand normal-case">3i</span>
+            <span aria-hidden="true" className="land land-2 flex items-end gap-[0.12em]">
+              <LogoMark className="mb-[0.1em] h-[0.72em] w-auto shrink-0 text-brand" />
+              <span>Forum</span>
+            </span>
           </span>
-          <span className="land-mask block">
-            <span className="land land-3 block">Forum</span>
-          </span>
-          <span className="sr-only"> with Stefan de Alwis</span>
+          <span className="sr-only">3i Forum with Stefan de Alwis</span>
         </h1>
-        <p className="land land-3 mt-3 text-sm tracking-[0.35em] text-paper uppercase sm:text-base">
+        <p className="land land-3 mt-4 text-lg tracking-[0.3em] text-paper uppercase sm:text-2xl lg:text-3xl">
           with Stefan de Alwis
         </p>
         <div className="mt-8 flex flex-col gap-6 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">

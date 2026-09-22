@@ -10,6 +10,7 @@
   --color-danger: #ff6b5a;
 
   --font-display: var(--font-teko), "Arial Narrow", sans-serif;
+  --font-wordmark: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 

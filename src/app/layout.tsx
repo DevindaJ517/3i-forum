@@ -1,10 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Teko } from "next/font/google";
+import { Montserrat, Teko } from "next/font/google";
 import { connection } from "next/server";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import "./globals.css";
+
+// Wordmark font, matching The 3i Show logo lockup.
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+});
 
 const teko = Teko({
   variable: "--font-teko",
@@ -32,7 +38,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   await connection();
 
   return (
-    <html lang="en" className={`${teko.variable} h-full antialiased`}>
+    <html lang="en" className={`${teko.variable} ${montserrat.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
