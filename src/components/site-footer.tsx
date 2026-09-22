@@ -15,7 +15,9 @@ export function SiteFooter() {
           <p className="display text-4xl text-white">
             <span className="text-brand normal-case">3i</span> Forum
           </p>
-          <p className="mt-3 max-w-xs text-sm text-neutral-400">
+          <p className="text-xs tracking-[0.3em] text-neutral-400 uppercase">with Stefan de Alwis</p>
+          <p className="display mt-4 text-2xl text-brand">Connect. Learn. Build. Grow.</p>
+          <p className="mt-1 max-w-xs text-sm text-neutral-400">
             A community for Sri Lanka&apos;s entrepreneurs, from the team behind The 3i Show.
           </p>
         </div>

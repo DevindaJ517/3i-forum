@@ -18,9 +18,15 @@ const PILLARS = [
   },
   {
     n: "03",
+    title: "Build",
+    body: "Turn ideas into action with practical workshops, frank feedback on your plans, and partners you can build alongside.",
+    sticky: "top-32",
+  },
+  {
+    n: "04",
     title: "Grow",
     body: "Access to mentors, investors and the voices featured on The 3i Show, plus events built around what members actually need.",
-    sticky: "top-32",
+    sticky: "top-36",
   },
 ];
 
@@ -30,7 +36,7 @@ const STEPS = [
   { n: "03", title: "Join", body: "Approved members are welcomed into their first forum and the wider 3i community." },
 ];
 
-const MARQUEE = ["Apply now", "✦", "Join 3i Forum", "✦", "Connect", "✦", "Learn", "✦", "Grow", "✦"];
+const MARQUEE = ["Apply now", "✦", "Join 3i Forum", "✦", "Connect", "✦", "Learn", "✦", "Build", "✦", "Grow", "✦"];
 
 function Marquee({ reverse = false, dark = false }: { reverse?: boolean; dark?: boolean }) {
   const items = [...MARQUEE, ...MARQUEE];
@@ -77,7 +83,7 @@ export default function HomePage() {
               What you <span className="text-brand">get</span>
             </h2>
             <p data-anim="reveal" className="max-w-sm text-neutral-400">
-              Three things every member gets from day one, whatever stage your business is at.
+              Connect, learn, build and grow. What every member gets, whatever stage your business is at.
             </p>
           </div>
 

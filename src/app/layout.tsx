@@ -14,11 +14,11 @@ const teko = Teko({
 
 export const metadata: Metadata = {
   title: {
-    default: "3i Forum | Sri Lanka's Entrepreneur Community",
-    template: "%s | 3i Forum",
+    default: "3i Forum with Stefan de Alwis | Connect, Learn, Build, Grow",
+    template: "%s | 3i Forum with Stefan de Alwis",
   },
   description:
-    "3i Forum brings Sri Lanka's entrepreneurs together to connect, learn from each other and grow. Brought to you by The 3i Show.",
+    "3i Forum with Stefan de Alwis: a community where Sri Lanka's entrepreneurs connect, learn, build and grow. From the team behind The 3i Show.",
 };
 
 export const viewport: Viewport = {

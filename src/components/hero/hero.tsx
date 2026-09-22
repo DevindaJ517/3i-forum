@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { LOGO_PATH, LOGO_VIEWBOX } from "@/components/logo-mark";
 import type { ParticleEngine } from "./particles";
 
 type Phase = "pending" | "playing" | "landing" | "done";
@@ -150,13 +151,11 @@ export function Hero() {
 
       // --- Intro -------------------------------------------------------------
       const e = engine;
-      const fontFamily = getComputedStyle(section).getPropertyValue("--font-teko").trim() || "sans-serif";
       const wide = e.aspect >= 1;
-      const points = await particles.sampleTextPoints("3i", count, {
-        fontFamily,
+      const points = particles.samplePathPoints(LOGO_PATH, LOGO_VIEWBOX, count, {
         worldHeight: wide ? 1.05 : 0.8,
         maxWorldWidth: e.aspect * 2 * 0.7,
-        offsetY: 0.1,
+        offsetY: 0.2,
       });
       if (cancelled) return;
       e.setTextTargets(points);
@@ -188,8 +187,8 @@ export function Hero() {
       if (caption) {
         tl.fromTo(
           caption,
-          { opacity: 0, y: 16, letterSpacing: "0.9em" },
-          { opacity: 1, y: 0, letterSpacing: "0.45em", duration: 0.8 },
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.8 },
           formAt + 0.7,
         );
         tl.to(caption, { opacity: 0, y: -12, duration: 0.35, ease: "power2.in" }, formAt + 1.75);
@@ -244,12 +243,15 @@ export function Hero() {
             ))}
           </div>
         </div>
-        <p
+        <div
           data-intro-caption
-          className="display absolute inset-x-0 top-[70%] text-center text-3xl tracking-[0.45em] text-white opacity-0 md:top-[76%] md:text-5xl"
+          className="absolute inset-x-0 top-[70%] px-4 text-center opacity-0 md:top-[76%]"
         >
-          Forum
-        </p>
+          <p className="display text-4xl tracking-[0.3em] text-white md:text-6xl">
+            <span className="text-brand normal-case">3i</span> Forum
+          </p>
+          <p className="mt-2 text-sm tracking-[0.35em] text-white/70 uppercase md:text-base">with Stefan de Alwis</p>
+        </div>
       </div>
 
       {phase === "playing" && (
@@ -278,12 +280,18 @@ export function Hero() {
           <span className="land-mask block">
             <span className="land land-3 block">Forum</span>
           </span>
+          <span className="sr-only"> with Stefan de Alwis</span>
         </h1>
+        <p className="land land-3 mt-3 text-sm tracking-[0.35em] text-paper uppercase sm:text-base">
+          with Stefan de Alwis
+        </p>
         <div className="mt-8 flex flex-col gap-6 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">
-          <p className="land land-4 max-w-xl text-lg text-paper sm:text-xl">
-            Where Sri Lanka&apos;s entrepreneurs connect, learn from one another and grow together. From the team
-            behind The 3i Show.
-          </p>
+          <div className="land land-4 max-w-xl">
+            <p className="display text-3xl text-brand sm:text-4xl">Connect. Learn. Build. Grow.</p>
+            <p className="mt-2 text-lg text-paper sm:text-xl">
+              A home for Sri Lanka&apos;s entrepreneurs, from the team behind The 3i Show.
+            </p>
+          </div>
           <div className="land land-5">
             <Link href="/apply" className="btn-cta w-full text-2xl sm:w-auto sm:text-3xl">
               Apply for membership <span className="cta-arrow">→</span>

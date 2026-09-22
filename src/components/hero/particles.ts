@@ -1,7 +1,7 @@
 // Lightweight WebGL particle engine for the hero intro.
 //
 // All motion runs on the GPU: every particle carries three target positions
-// (a drifting cloud, the "3i" glyph, and a 3D sphere) and the vertex shader
+// (a drifting cloud, the 3i logo mark, and a 3D sphere) and the vertex shader
 // blends between them from a handful of uniforms. The CPU only updates those
 // uniforms each frame, so it stays smooth on mid-range phones.
 
@@ -38,7 +38,7 @@ void main() {
   start.xy += vec2(sin(t * 0.3 + aRand.x * 6.2831), cos(t * 0.25 + aRand.y * 6.2831)) * 0.08;
   start = rotY(t * 0.05) * start;
 
-  // 2. "3i" glyph, with a gentle shimmer.
+  // 2. 3i logo mark, with a gentle shimmer.
   vec3 text = aText + vec3(sin(t * 2.0 + aRand.z * 20.0), cos(t * 1.7 + aRand.w * 20.0), 0.0) * 0.004;
 
   // 3. Organic sphere plus an orbiting dust ring.
@@ -339,58 +339,43 @@ export function createParticleEngine(canvas: HTMLCanvasElement, { count, maxPixe
   };
 }
 
-// Rasterise text on an offscreen canvas and pick `count` points inside the
-// glyphs, mapped to world space (view height = 2 units at z = 0).
-export async function sampleTextPoints(
-  label: string,
+// Rasterise an SVG path on an offscreen canvas and pick `count` points
+// inside it, mapped to world space (view height = 2 units at z = 0).
+export function samplePathPoints(
+  path: string,
+  box: { width: number; height: number },
   count: number,
-  { fontFamily, worldHeight, maxWorldWidth, offsetY = 0 }: {
-    fontFamily: string;
-    worldHeight: number;
-    maxWorldWidth: number;
-    offsetY?: number;
-  },
-): Promise<Float32Array> {
-  const font = `700 200px ${fontFamily}`;
-  try {
-    await document.fonts.load(font, label);
-  } catch {
-    // Fall back to whatever font is available.
-  }
-
+  { worldHeight, maxWorldWidth, offsetY = 0 }: { worldHeight: number; maxWorldWidth: number; offsetY?: number },
+): Float32Array {
+  const res = 400 / box.height; // raster at ~400px tall
+  const w = Math.ceil(box.width * res);
+  const h = Math.ceil(box.height * res);
   const c = document.createElement("canvas");
+  c.width = w;
+  c.height = h;
   const ctx = c.getContext("2d", { willReadFrequently: true })!;
-  ctx.font = font;
-  const m = ctx.measureText(label);
-  const pad = 20;
-  const textW = Math.ceil(m.actualBoundingBoxLeft + m.actualBoundingBoxRight);
-  const textH = Math.ceil(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent);
-  c.width = textW + pad * 2;
-  c.height = textH + pad * 2;
-  ctx.font = font;
+  ctx.scale(res, res);
   ctx.fillStyle = "#fff";
-  ctx.fillText(label, pad + m.actualBoundingBoxLeft, pad + m.actualBoundingBoxAscent);
+  ctx.fill(new Path2D(path));
 
-  const { data, width, height } = ctx.getImageData(0, 0, c.width, c.height);
+  const { data } = ctx.getImageData(0, 0, w, h);
   const filled: number[] = [];
-  for (let y = 0; y < height; y += 2) {
-    for (let x = 0; x < width; x += 2) {
-      if (data[(y * width + x) * 4 + 3] > 128) filled.push(x, y);
+  for (let y = 0; y < h; y += 2) {
+    for (let x = 0; x < w; x += 2) {
+      if (data[(y * w + x) * 4 + 3] > 128) filled.push(x, y);
     }
   }
 
-  const scale = Math.min(worldHeight / textH, maxWorldWidth / textW);
-  const cx = pad + textW / 2;
-  const cy = pad + textH / 2;
+  const scale = Math.min(worldHeight / h, maxWorldWidth / w);
   const out = new Float32Array(count * 3);
   const pixels = filled.length / 2;
 
   for (let i = 0; i < count; i++) {
     const p = pixels ? Math.floor(Math.random() * pixels) : 0;
-    const px = (filled[p * 2] ?? cx) + Math.random() * 2;
-    const py = (filled[p * 2 + 1] ?? cy) + Math.random() * 2;
-    out[i * 3] = (px - cx) * scale;
-    out[i * 3 + 1] = -(py - cy) * scale + offsetY;
+    const px = (filled[p * 2] ?? w / 2) + Math.random() * 2;
+    const py = (filled[p * 2 + 1] ?? h / 2) + Math.random() * 2;
+    out[i * 3] = (px - w / 2) * scale;
+    out[i * 3 + 1] = -(py - h / 2) * scale + offsetY;
     out[i * 3 + 2] = (Math.random() - 0.5) * 0.08;
   }
   return out;
