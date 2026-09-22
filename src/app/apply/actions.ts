@@ -73,6 +73,13 @@ export async function submitApplication(application: unknown, botCheck: unknown)
     return { ok: false, message: "Too many submissions. Please wait a while and try again." };
   }
 
+  // Demo mode: everything above ran for real, but nothing is stored (and no
+  // personal data is logged).
+  if (!db) {
+    console.info("[apply] demo mode: valid application received, not saved");
+    return SUCCESS;
+  }
+
   // 4. Persist. Parameterised by the ORM, so no SQL injection surface.
   try {
     await db

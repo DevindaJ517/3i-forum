@@ -15,6 +15,10 @@ A community platform for Sri Lanka's entrepreneurs, from the team behind The 3i 
 | Forms | react-hook-form + `@hookform/resolvers/zod` |
 | Motion | Custom WebGL particle intro (~3 KB), GSAP + ScrollTrigger + SplitText, Lenis smooth scroll |
 
+## Demo mode
+
+If `DATABASE_URL` is not set, the app runs in **demo mode**: the whole site and form work (including validation and anti-bot checks), but applications are not saved. `APP_SECRET` is optional in demo mode. This is how the Vercel preview runs with zero configuration. Add `DATABASE_URL` + `APP_SECRET` to go live.
+
 ## Getting started
 
 ```bash
