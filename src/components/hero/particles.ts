@@ -120,7 +120,7 @@ export type ParticleEngine = {
   destroy(): void;
 };
 
-type Options = { count: number; maxPixelRatio: number };
+type Options = { count: number; maxPixelRatio: number; onContextLost?: () => void };
 
 const INK = [0x15 / 255, 0x14 / 255, 0x15 / 255] as const;
 const GOLD = [0xfd / 255, 0xbb / 255, 0x2b / 255] as const;
@@ -139,7 +139,10 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
   return shader;
 }
 
-export function createParticleEngine(canvas: HTMLCanvasElement, { count, maxPixelRatio }: Options): ParticleEngine | null {
+export function createParticleEngine(
+  canvas: HTMLCanvasElement,
+  { count, maxPixelRatio, onContextLost }: Options,
+): ParticleEngine | null {
   const gl = canvas.getContext("webgl", {
     alpha: false,
     antialias: false,
@@ -296,10 +299,15 @@ export function createParticleEngine(canvas: HTMLCanvasElement, { count, maxPixe
     gl!.drawArrays(gl!.POINTS, 0, count);
   }
 
+  // Phones can drop the GPU context (e.g. after switching apps). Hide the
+  // canvas so the hero falls back to its plain dark background.
   const onLost = (e: Event) => {
     e.preventDefault();
     lost = true;
+    running = false;
     cancelAnimationFrame(raf);
+    canvas.dataset.lost = "true";
+    onContextLost?.();
   };
   canvas.addEventListener("webglcontextlost", onLost);
 

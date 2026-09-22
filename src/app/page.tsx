@@ -94,6 +94,7 @@ export default function HomePage() {
                 data-stack-card
                 className={`sticky ${p.sticky} flex min-h-[26rem] origin-top flex-col justify-between overflow-hidden border border-line bg-ink-soft p-7 shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.8)] sm:min-h-[28rem] sm:p-12`}
               >
+                <div aria-hidden="true" data-stack-shade className="pointer-events-none absolute inset-0 z-10 bg-black opacity-0" />
                 <div className="flex items-start justify-between gap-6">
                   <span className="display text-outline text-8xl sm:text-[10rem]">{p.n}</span>
                   <span aria-hidden="true" className="display text-4xl text-brand sm:text-5xl">

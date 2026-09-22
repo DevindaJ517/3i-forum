@@ -26,6 +26,9 @@ export function ScrollEffects() {
       ]);
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger, SplitText);
+      // Phones resize the viewport whenever the address bar shows or hides.
+      // Don't recalculate every trigger on that, it causes jumps and jank.
+      ScrollTrigger.config({ ignoreMobileResize: true });
       await document.fonts.ready;
       if (cancelled) return;
 
@@ -110,12 +113,12 @@ export function ScrollEffects() {
         cards.forEach((card, i) => {
           const next = cards[i + 1];
           if (!next) return;
-          gsap.to(card, {
-            scale: 0.92,
-            filter: "brightness(0.55)",
-            ease: "none",
-            scrollTrigger: { trigger: next, start: "top 85%", end: "top 25%", scrub: true },
-          });
+          // Dim with an overlay's opacity, not a CSS filter: filters on large
+          // elements are very expensive on phones (especially iOS Safari).
+          const shade = card.querySelector("[data-stack-shade]");
+          const scrollTrigger = { trigger: next, start: "top 85%", end: "top 25%", scrub: true };
+          gsap.to(card, { scale: 0.92, ease: "none", scrollTrigger });
+          if (shade) gsap.to(shade, { opacity: 0.5, ease: "none", scrollTrigger });
         });
       });
 

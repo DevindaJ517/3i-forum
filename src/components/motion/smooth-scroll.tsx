@@ -2,12 +2,17 @@
 
 import { useEffect } from "react";
 
-// Lenis smooth scrolling, driven by GSAP's ticker so ScrollTrigger stays in
-// sync. Touch devices keep native scrolling (Lenis default), which is both
-// smoother and cheaper on phones.
+// Lenis smooth scrolling on desktop, driven by GSAP's ticker so ScrollTrigger
+// stays in sync.
 export function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Touch devices keep native scrolling: it's smoother and cheaper there.
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(pointer: coarse)").matches
+    ) {
+      return;
+    }
 
     let cancelled = false;
     let cleanup = () => {};

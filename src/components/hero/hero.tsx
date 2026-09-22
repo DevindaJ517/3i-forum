@@ -66,15 +66,23 @@ export function Hero() {
     async function init() {
       const [{ gsap }, particles] = await Promise.all([import("gsap"), import("./particles")]);
       if (cancelled) return;
+      // Keep animations on real clock time: on a struggling phone the intro
+      // drops frames but still finishes on schedule instead of dragging on.
+      gsap.ticker.lagSmoothing(0);
 
       const coarse = window.matchMedia("(pointer: coarse)").matches;
       const cores = navigator.hardwareConcurrency || 4;
       let count = Math.round((window.innerWidth * window.innerHeight) / 100);
-      count = Math.min(14000, Math.max(3500, count));
+      // Phones get a smaller budget: plenty for the effect, easy on battery and memory.
+      count = Math.min(coarse ? 4500 : 14000, Math.max(coarse ? 2500 : 3500, count));
       if (cores <= 4) count = Math.round(count * 0.6);
 
       try {
-        engine = particles.createParticleEngine(canvas, { count, maxPixelRatio: coarse ? 1.5 : 2 });
+        engine = particles.createParticleEngine(canvas, {
+          count,
+          maxPixelRatio: coarse ? 1.25 : 2,
+          onContextLost: () => finish(),
+        });
       } catch {
         engine = null;
       }

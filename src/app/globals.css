@@ -118,9 +118,18 @@ html.intro-lock body {
     backdrop-filter 0.4s ease;
 }
 .site-header[data-scrolled="true"] {
-  background-color: rgb(21 20 21 / 0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgb(21 20 21 / 0.96);
+}
+/* Backdrop blur is costly on phones; keep it for larger screens. */
+@media (min-width: 768px) {
+  .site-header[data-scrolled="true"] {
+    background-color: rgb(21 20 21 / 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+.hero-canvas[data-lost="true"] {
+  display: none;
 }
 
 /* ---------------------------------------------------------------------------
